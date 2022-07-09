@@ -9,42 +9,48 @@ class User extends Model {
   }
 }
 
-
 User.init(
-    {
-        id: {
-        type:
-        primaryKey:
-        autoIncrement:
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
     },
     username: {
-        type:
-        allowNull:
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     password: {
-        type:
-        allowNull:
-        validate: {
-            len: [4]
-        }
-    }
-},
-{
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [4],
+      },
+    },
+  },
+  {
     hooks: {
-        async beoreCreate(newUserData) {
-            updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10);
-            return updatedUserData;
-        },
+      async beoreCreate(newUserData) {
+        updatedUserData.password = await bcrypt.hash(
+          updatedUserData.password,
+          10
+        );
+        return updatedUserData;
+      },
 
-        async beforeUpdate(updatedUserData) {
-            updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10)
-        }
+      async beforeUpdate(updatedUserData) {
+        updatedUserData.password = await bcrypt.hash(
+          updatedUserData.password,
+          10
+        );
+      },
     },
     sequelize,
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'User'
+    modelName: "User",
   }
 );
 
+module.exports = User;
